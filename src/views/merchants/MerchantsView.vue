@@ -25,7 +25,6 @@
           <div class="dropdown-wrap">
             <select v-model="selectedCampaign">
               <option value="">All campaigns</option>
-              <!-- <option v-for="name in campaignNames" :key="name" :value="name">{{ name }}</option> -->
               <option v-for="c in campaigns" :key="c.id" :value="c.id">{{ c.name }}</option>
             </select>
             <i class="ti ti-chevron-down" aria-hidden="true" />
@@ -99,9 +98,9 @@ function isCodeAttribution(m) {
   return m.attribution_source === 'affiliate_code' || m.attribution_source === 'coupon_code'
 }
 
-function initials(name) {
-  return (name || '').split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase()
-}
+// function initials(name) {
+//   return (name || '').split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase()
+// }
 
 onMounted(async () => {
   try {
@@ -109,13 +108,9 @@ onMounted(async () => {
       api.get('/affiliate/merchants/'),
       api.get('/affiliate/campaigns/'),
     ])
-    console.log('merchants raw:', mRes.data)
-    console.log('campaigns raw:', cRes.data)
     merchants.value = mRes.data.results ?? mRes.data
     // All campaigns this affiliate is on — not derived from merchant data
     campaigns.value = (cRes.data.results ?? cRes.data)
-    console.log('merchants.value:', merchants.value)
-    console.log('campaigns.value:', campaigns.value)
   } finally { loading.value = false }
 })
 </script>
