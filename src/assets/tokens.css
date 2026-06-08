@@ -1,0 +1,74 @@
+/* ─────────────────────────────────────────────────────
+   Leyyow Affiliate Portal — Design tokens
+   Mobile-first. Max content width 480px.
+───────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brand:        #FEAA00;
+  --brand-dark:   #DF7B00;
+  --brand-deep:   #14110E;
+  --seed-husk:    #462C1F;
+
+  --pollen:       #FFEECD;
+  --pollen-light: #FFF8EC;
+
+  --text-primary:   #14110E;
+  --text-secondary: #6B6560;
+  --text-tertiary:  #A09890;
+
+  --border:        #E8E2DA;
+  --border-strong: #D0C8BE;
+
+  --surface:      #FFFFFF;
+  --surface-warm: #FDFAF5;
+  --bg:           #F7F3ED;
+
+  --green-bg:   #E6F5EE;
+  --green-text: #0A6640;
+  --amber-bg:   #FEF3DC;
+  --amber-text: #7A4800;
+  --red-bg:     #FDECEA;
+  --red-text:   #9B1F1F;
+  --gray-bg:    #F1EFE8;
+  --gray-text:  #5A5650;
+  --blue-bg:    #E6F1FB;
+  --blue-text:  #0C447C;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  --shadow-sm: 0 1px 3px rgba(20,17,14,0.06);
+  --shadow-md: 0 4px 16px rgba(20,17,14,0.10), 0 2px 4px rgba(20,17,14,0.04);
+
+  --bottom-nav-h: 64px;
+}
+
+html, body {
+  font-family: var(--font);
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+
+#app { min-height: 100vh; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
+
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+a { color: inherit; text-decoration: none; }
+
+.fade-enter-active, .fade-leave-active { transition: opacity 0.15s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+.slide-up-enter-active { transition: all 0.22s ease; }
+.slide-up-enter-from { opacity: 0; transform: translateY(8px); }
