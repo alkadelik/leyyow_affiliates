@@ -10,14 +10,14 @@
       <div class="balance-card" :class="{ locked: !canPayout }">
         <div class="bal-label">Available balance</div>
         <div class="bal-amount">{{ fmt.naira(wallet.balance) }}</div>
-        <div class="bal-threshold">Minimum payout threshold: {{ fmt.naira(THRESHOLD) }}</div>
+        <div class="bal-threshold">Minimum payout threshold: {{ fmt.naira(threshold) }}</div>
         <div v-if="!canPayout" class="progress-wrap">
           <div class="progress-track">
             <div class="progress-fill" :style="{ width: progressPct + '%' }" />
           </div>
           <div class="progress-labels">
             <span>{{ fmt.naira(wallet.balance) }}</span>
-            <span>{{ fmt.naira(THRESHOLD) }} to unlock</span>
+            <span>{{ fmt.naira(threshold) }} to unlock</span>
           </div>
         </div>
         <div class="bal-meta-row">
@@ -36,7 +36,7 @@
       <div v-if="!canPayout" class="warning-box">
         <i class="ti ti-lock" aria-hidden="true" />
         <div class="warning-text">
-          Your balance is <strong>{{ fmt.naira(THRESHOLD - wallet.balance) }} below</strong> the minimum payout amount of {{ fmt.naira(THRESHOLD) }}. Keep earning to unlock a withdrawal.
+          Your balance is <strong>{{ fmt.naira(threshold - wallet.balance) }} below</strong> the minimum payout amount of {{ fmt.naira(threshold) }}. Keep earning to unlock a withdrawal.
         </div>
       </div>
 
@@ -73,7 +73,7 @@
             <input v-model.number="amount" type="number" :placeholder="minAmountNaira.toString()" @input="validateAmount" />
           </div>
           <div v-if="amountError" class="amount-error-msg">{{ amountError }}</div>
-          <div v-else class="amount-hint">Maximum: {{ fmt.naira(wallet.balance) }} · Minimum: {{ fmt.naira(THRESHOLD) }}</div>
+          <div v-else class="amount-hint">Maximum: {{ fmt.naira(wallet.balance) }} · Minimum: {{ fmt.naira(threshold) }}</div>
         </div>
         <div class="card">
           <div class="card-title">Fee breakdown</div>
@@ -230,11 +230,9 @@ import AppLoader from '@/components/ui/AppLoader.vue'
 const fmt   = useFormat()
 const toast = useToastStore()
 
-const THRESHOLD = 5_000_000  // ₦50,000 in kobo
-
 // ── State ─────────────────────────────────────────────────────────────────────
 const loading = ref(true)
-const wallet = ref({ balance:0, total_earned:0, total_withdrawn:0 })
+const wallet = ref({ balance:0, total_earned:0, total_withdrawn:0, minimum_withdrawal_kobo: 5_000_000 })
 const bankAccounts = ref([])
 const payouts = ref([])
 const selectedBank = ref(null)
@@ -257,9 +255,10 @@ const resolvingAccount = ref(false)
 const accountResolveError = ref('')
 
 // ── Computed ──────────────────────────────────────────────────────────────────
-const canPayout = computed(() => wallet.value.balance >= THRESHOLD)
-const minAmountNaira = computed(() => Math.floor(THRESHOLD / 100))
-const progressPct = computed(() => Math.min(100, Math.round(wallet.value.balance / THRESHOLD * 100)))
+const threshold = computed(() => wallet.value.minimum_withdrawal_kobo)
+const canPayout = computed(() => wallet.value.balance >= threshold.value)
+const minAmountNaira = computed(() => Math.floor(threshold.value / 100))
+const progressPct = computed(() => Math.min(100, Math.round(wallet.value.balance / threshold.value * 100)))
 
 const canSubmit = computed(() =>
   canPayout.value && selectedBank.value && amount.value >= minAmountNaira.value && !amountError.value
