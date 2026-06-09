@@ -152,10 +152,11 @@ code { font-size: 12px; background: #f1f5f9; padding: 2px 5px; border-radius: 3p
 
 /* ── Status badge ──────────────────────────────────────────────────────── */
 .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.badge-trial      { background: #fef3c7; color: #b45309; }
 .badge-signed_up  { background: #dbeafe; color: #1d4ed8; }
 .badge-subscribed { background: #dcfce7; color: #15803d; }
 .badge-cancelled  { background: #fee2e2; color: #b91c1c; }
-.badge-expired    { background: #fef3c7; color: #b45309; }
+.badge-expired    { background: #f1f5f9; color: #475569; }
 
 /* ── Ellipsis menu ─────────────────────────────────────────────────────── */
 .menu-wrap { position: relative; display: inline-block; }

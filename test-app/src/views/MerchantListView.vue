@@ -41,6 +41,7 @@
               <div class="menu-wrap" v-click-outside="() => closeMenu(m.id)">
                 <button class="menu-btn" @click.stop="toggleMenu(m.id)">⋯</button>
                 <div v-if="openMenuId === m.id" class="dropdown">
+                  <button v-if="m.status === 'trial'" class="dropdown-item" @click="openModal('end_trial', m)">End Trial</button>
                   <button class="dropdown-item" @click="openModal('subscribe', m)">Subscribe</button>
                   <button class="dropdown-item" @click="openModal('cancel', m)">Cancel</button>
                   <button class="dropdown-item" @click="openModal('expire', m)">Expire</button>
@@ -115,6 +116,7 @@ const error      = ref('')
 const openMenuId = ref(null)
 
 const TITLES = {
+  end_trial:   'End Trial',
   subscribe:   'Subscribe',
   cancel:      'Cancel Subscription',
   expire:      'Expire Subscription',
@@ -225,6 +227,12 @@ async function submitModal() {
       amount_paid_kobo:         parseInt(f.amount_paid_kobo, 10),
       merchant_subscription_id: f.merchant_subscription_id,
       occurred_at:              new Date(f.occurred_at).toISOString(),
+    }
+  } else if (modal.action === 'end_trial') {
+    body = {
+      merchant_id: m.merchant_id,
+      event_type:  'trial_ended',
+      occurred_at: new Date(f.occurred_at).toISOString(),
     }
   } else {
     body = {
