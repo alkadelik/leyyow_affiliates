@@ -61,7 +61,7 @@ api.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post('/api/affiliate/auth/token/refresh/', { refresh })
+        const { data } = await api.post('/affiliate/auth/token/refresh/', { refresh })
         const newAccess = data.access
         localStorage.setItem('aff_access_token', newAccess)
         api.defaults.headers.common.Authorization = `Bearer ${newAccess}`
